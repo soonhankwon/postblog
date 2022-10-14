@@ -5,15 +5,19 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Getter
 public class SignupRequestDto {
-    @NotBlank(message = "닉네임을 입력해주세요")
-    @Pattern(regexp ="^[a-zA-Z0-9]{4,12}$", message = "닉네임을 4~12자로 입력해주세요")
+    @NotBlank(message = "{member.nickname.notblank}")
+    @Size(min = 4, max = 12, message = "{member.nickname.size}")
+    @Pattern(regexp ="[a-z\\d]*${3,12}", message = "{member.nickname.pattern}")
     private String nickname;
-    @NotBlank(message = "비밀번호를 입력해주세요")
-    @Pattern(regexp ="^[a-zA-Z0-9]{4,32}$", message = "비밀번호 4~32자로 입력해주세요")
+    @NotBlank(message = "{member.password.notblank}")
+    @Size(min = 8, max = 20, message = "{member.password.size}")
+    @Pattern(regexp ="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$",
+            message = "{member.password.pattern}")
     private String password;
     @NotBlank(message = "비밀번호 확인을 입력해주세요")
     private String passwordConfirm;
