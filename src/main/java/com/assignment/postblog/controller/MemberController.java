@@ -28,7 +28,7 @@ public class MemberController {
     public GlobalResDto login(@RequestBody @Valid LoginMemberDto loginMemberDto, HttpServletResponse response) {
         return memberService.login(loginMemberDto, response);
     }
-    @GetMapping("/issue/token")
+    @GetMapping("/issue/token") //토큰을 만드는 API
     public GlobalResDto issuedToken(@AuthenticationPrincipal MemberDetailsImpl memberDetails, HttpServletResponse response) {
         response.addHeader(JwtTokenProvider.ACCESS_TOKEN, jwtTokenProvider.createToken(memberDetails.getMember().getNickname(), "Access"));
         return new GlobalResDto("Success IssuedToken", HttpStatus.OK.value());
