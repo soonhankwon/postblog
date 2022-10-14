@@ -25,9 +25,9 @@ public class Member extends Timestamped {
     private String password;
     @Column(nullable = false)
     private String passwordConfirm;
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private MemberRoleEnum role;
+//    @Column(nullable = false)
+//    @Enumerated(value = EnumType.STRING)
+//    private MemberRoleEnum role;
 
     public Member (SignupRequestDto signupRequestDto) {
         this.nickname = signupRequestDto.getNickname();

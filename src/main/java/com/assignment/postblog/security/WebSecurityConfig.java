@@ -35,7 +35,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
+        // 회원 관리 처리 API (POST /member/**) 에 대해 CSRF 무시
         http.csrf().disable();
 //                .ignoringAntMatchers("/post/**")
 //                .ignoringAntMatchers("/comment/**")
@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                         // css 폴더를 login 없이 허용
                         .antMatchers("/css/**").permitAll()
                         // 회원 관리 처리 API 전부를 login 없이 허용
-                        .antMatchers("/member/**").permitAll()
+                        .antMatchers("/api/member/**").permitAll()
                         // 어떤 요청이든 '인증'
                         .anyRequest().authenticated()
                         .and().addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),

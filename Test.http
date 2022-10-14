@@ -1,0 +1,24 @@
+GET http://localhost:8080/api/issue/token
+Accept: application/json
+Refresh_Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb29uaGFua3dvbjEiLCJleHAiOjE2NjYzNTI0MTcsImlhdCI6MTY2NTc0NzYxN30.ecHc88H-jTteQIHuNqoUVYyq_ogc4G10R9gFXXCAvus
+
+###
+POST http://localhost:8080/api/member/login
+Content-Type: application/json
+
+{
+  "nickname": "soonhankwon1",
+  "password": "password1!",
+  "passwordConfirm": "password1!"
+}
+
+###
+POST http://localhost:8080/api/member/signup
+Content-Type: application/json
+
+{
+  "nickname": "soonhankwon1",
+  "password": "password1!",
+  "passwordConfirm": "password1!"
+}
+###

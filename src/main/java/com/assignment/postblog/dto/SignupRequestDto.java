@@ -21,7 +21,7 @@ public class SignupRequestDto {
     private String password;
     @NotBlank(message = "비밀번호 확인을 입력해주세요")
     private String passwordConfirm;
-    private boolean admin = false;
+//    private boolean admin = false;
 
     public SignupRequestDto (String nickname, String password, String passwordConfirm) {
         this.nickname = nickname;
