@@ -1,18 +1,26 @@
 package com.assignment.postblog.exception;
 
-import com.assignment.postblog.dto.MemberResponseDto;
-import lombok.extern.slf4j.Slf4j;
+import com.assignment.postblog.model.Error;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@Slf4j
+import java.util.ArrayList;
+import java.util.List;
+
 @RestControllerAdvice
 public class CustomExceptionHandler {
-    @ExceptionHandler(value = {CustomException.class})
-    public ResponseEntity<Object> handleAdminErrorException(CustomException exception) {
-        log.error("throw customException : {}", exception.getErrorCode());
-        MemberResponseDto restApiException = new MemberResponseDto(exception.getErrorCode().getHttpStatus().value(), exception.getErrorCode().getDetail(), "");
-        return new ResponseEntity<>(restApiException, exception.getErrorCode().getHttpStatus());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException exception) {
+        List<Error> errors = new ArrayList<>();
+        for (FieldError field : exception.getBindingResult().getFieldErrors()) {
+            errors.add(new Error(field.getField(), field.getDefaultMessage()));
+        }
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errors);
     }
 }

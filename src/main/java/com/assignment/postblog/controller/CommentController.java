@@ -31,8 +31,6 @@ public class CommentController {
         //로그인 되어 있는 회원 테이블의 ID
         Long memberId = userDetails.getMember().getId();
         return commentService.getComments(memberId);
-//        CommentInfoResponseDto commentInfoResponseDto = commentService.findComment(id);
-//        return new CommonResponse(commentInfoResponseDto);
     }
     @PutMapping("/auth/comment/{id}") //댓글 수정
     public Long updateComment (@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
@@ -43,7 +41,6 @@ public class CommentController {
     @DeleteMapping("/auth/comment/{id}") //댓글 삭제
     public Long deleteComment(@PathVariable Long id) {
         Comment comment = commentService.deleteComment(id);
-//        commentRepository.deleteById(id);
         return id;
     }
 }

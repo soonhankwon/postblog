@@ -1,5 +1,7 @@
 package com.assignment.postblog.exception;
 
+import com.assignment.postblog.dto.ResponseDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,12 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)
             throws IOException {
-        response.sendRedirect("/exception/access");
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().println(
+                new ObjectMapper().writeValueAsString(
+                        ResponseDto.fail("BAD_REQUEST","이 작업은 로그인이 필요합니다.")
+                )
+        );
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 }
