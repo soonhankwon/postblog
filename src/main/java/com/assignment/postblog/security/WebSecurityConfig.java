@@ -50,23 +50,25 @@ public class WebSecurityConfig {
                         .antMatchers("/member/**").permitAll()
                         // 어떤 요청이든 '인증'
                         .anyRequest().authenticated()
-                )
-                // 로그인 기능 허용
-                .formLogin()
-                // 로그인 View 제공 (GET /user/login)
-                .loginPage("/member/login")
-                // 로그인 처리 (POST /user/login)
-                .loginProcessingUrl("/member/login")
-                // 로그인 처리 후 성공 시 URL
-                .defaultSuccessUrl("/")
-                .failureUrl("/member/login?error")
-                .permitAll()
-                .and()
-                //로그아웃 기능 허용
-                .logout()
-                //로그아웃 처리 URL
-                .logoutUrl("/member/logout")
-                .permitAll();
+                        .and().addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                                UsernamePasswordAuthenticationFilter.class));
+                //JWT 사용으로 스프링 시큐리티의 FormLogin 기능 OFF
+//                // 로그인 기능 허용
+//                .formLogin()
+//                // 로그인 View 제공 (GET /user/login)
+//                .loginPage("/member/login")
+//                // 로그인 처리 (POST /user/login)
+//                .loginProcessingUrl("/member/login")
+//                // 로그인 처리 후 성공 시 URL
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/member/login?error")
+//                .permitAll()
+//                .and()
+//                //로그아웃 기능 허용
+//                .logout()
+//                //로그아웃 처리 URL
+//                .logoutUrl("/member/logout")
+//                .permitAll();
         //프론트엔드가 별도로 존재하여 rest Api로 구성한다고 가정
         http.httpBasic().disable(); //스프링시큐리티에서 만들어주는 로그인 페이지를 안쓰기위해
         //세션사용X, JWT 토큰 방식을 사용하면 더이상 세션저장이 필요없으므로 꺼준다.

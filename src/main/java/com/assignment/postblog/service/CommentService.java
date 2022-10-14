@@ -2,7 +2,7 @@ package com.assignment.postblog.service;
 
 import com.assignment.postblog.dto.CommentInfoResponseDto;
 import com.assignment.postblog.dto.CommentRequestDto;
-import com.assignment.postblog.dto.DBEmptyDataException;
+import com.assignment.postblog.exception.DBEmptyDataException;
 import com.assignment.postblog.model.Comment;
 import com.assignment.postblog.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

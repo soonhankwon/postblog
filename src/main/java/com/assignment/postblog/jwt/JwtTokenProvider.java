@@ -25,6 +25,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+    // 토큰 생성 , header 토큰을 가져오는 기능, 토큰 검증, 리프레쉬 토큰 검증, 인증 객체 생성, 토큰에서 닉네임을 가져오는 기능
     private final MemberDetailsServiceImpl memberDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
     private static final String AUTHORITIES_KEY = "auth";
@@ -52,7 +53,7 @@ public class JwtTokenProvider {
     public TokenDto createAllToken(String nickname) {
         return new TokenDto(createToken(nickname, "Access"), createToken(nickname, "Refresh"));
     }
-
+    // 토큰 생성
     public String createToken(String nickname, String type) {
         Date date = new Date();
         long time = type.equals("Access") ? ACCESS_TOKEN_EXPIRE_TIME : REFRESH_TOKEN_EXPRIRE_TIME;
@@ -61,13 +62,13 @@ public class JwtTokenProvider {
                 .setSubject(nickname)
                 .setExpiration(new Date(date.getTime() + time))
                 .setIssuedAt(date)
-                .signWith(signatureAlgorithm, key)
+                .signWith(key,signatureAlgorithm)
                 .compact();
     }
-    // 토큰 검증
+    // 토큰 검증, parseBuilder() 토큰을 분해하는 코드
     public Boolean tokenValidation(String token) {
         try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
             log.error(ex.getMessage());
@@ -93,7 +94,7 @@ public class JwtTokenProvider {
 
     // 토큰에서 nickname을 가져오는 기능
     public String getNicknameFromToken(String token) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
     }
 }
 

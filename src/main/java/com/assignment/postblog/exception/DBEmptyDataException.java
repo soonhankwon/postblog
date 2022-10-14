@@ -1,4 +1,4 @@
-package com.assignment.postblog.dto;
+package com.assignment.postblog.exception;
 
 import lombok.Getter;
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping("/api")
 public class PostController {
     private final PostRepository postRepository;
     private final PostService postService;

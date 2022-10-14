@@ -8,13 +8,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class MemberDetailsImpl implements UserDetails {
-    private final Member member;
-
-    public MemberDetailsImpl(Member member) {
-        this.member = member;
-    }
+    private Member member;
     public Member getMember() {
-        return member;
+        return this.member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
     }
     @Override
     public String getPassword() {
